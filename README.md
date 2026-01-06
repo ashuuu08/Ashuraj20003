@@ -1,293 +1,1235 @@
-# 👋 Hello, I'm Ashish Rathour ([@itzashu08](https://github.com/itzashu08))
+# 🚀 JavaScript & React Interview Questions - PART 2
 
-![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=itzashu08.itzashu08)
-![Profile Views](https://komarev.com/ghpvc/?username=itzashu08&color=brightgreen)
-
-<p align="center">
-  <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="500" height="300"/>
-</p>
+**Continuation of Complete Interview Guide**
 
 ---
 
-## 🚀 About Me
+## Basic React Continued (Questions 106-130)
 
-* 💻 **Aspiring Java Full Stack Developer** passionate about building scalable, high-performance web applications
-* 🎓 Final Year **B.Tech Student** in Computer Science at Bansal Institute of Science & Technology, Bhopal
-* 🌱 Currently mastering **Java, Spring Boot, React.js, System Design (LLD)**, and **Data Structures & Algorithms**
-* 💡 Love solving real-world problems through clean code and innovative solutions
-* 🎯 **Goal:** Secure a high-impact Full Stack Developer role at a fast-growing tech company
-* 🌍 Open to opportunities in **India, UK**, or **Remote**
-* 🔥 Built production-ready applications including login/registration systems, portfolios, and full-stack web apps
-* 📫 Reach me at: **rajpootashishd@gmail.com**
+### Q106. What is useEffect hook?
+**Hindi:** useEffect hook side effects handle karne ke liye use hota hai.
 
----
+**Answer:**
+`useEffect` lets you perform side effects in functional components (API calls, subscriptions, DOM manipulation).
 
-## 🌐 Connect With Me
+**Syntax:**
+```jsx
+useEffect(() => {
+  // Effect code
+  return () => {
+    // Cleanup (optional)
+  };
+}, [dependencies]);
+```
 
-[![GitHub Followers](https://img.shields.io/github/followers/itzashu08?style=social)](https://github.com/itzashu08)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/itzashu08)
-[![Email](https://img.shields.io/badge/-Email-D14836?style=flat&logo=Gmail&logoColor=white)](mailto:rajpootashishd@gmail.com)
-[![Portfolio](https://img.shields.io/badge/-Portfolio-000000?style=flat&logo=vercel&logoColor=white)](https://your-portfolio-link.netlify.app)
+**Example:**
+```jsx
+import { useState, useEffect } from 'react';
 
----
+// 1. Run on every render
+function Component() {
+  useEffect(() => {
+    console.log('Runs on every render');
+  });
+}
 
-## 📊 GitHub Stats
+// 2. Run once on mount (empty dependency array)
+function Component() {
+  useEffect(() => {
+    console.log('Runs once on mount');
+  }, []);
+}
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=itzashu08&show_icons=true&theme=radical&count_private=true" alt="Ashish's GitHub Stats" />
-</p>
+// 3. Run when specific values change
+function Component() {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    console.log('Count changed:', count);
+  }, [count]); // Runs when count changes
+}
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=itzashu08&layout=compact&theme=radical" alt="Top Languages" />
-</p>
+// 4. Cleanup function
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(s => s + 1);
+    }, 1000);
+    
+    // Cleanup - runs before next effect and on unmount
+    return () => {
+      clearInterval(interval);
+      console.log('Timer cleaned up');
+    };
+  }, []);
+  
+  return <div>Seconds: {seconds}</div>;
+}
 
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=itzashu08&theme=radical" alt="GitHub Streak" />
-</p>
+// 5. Fetch data
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    setLoading(true);
+    
+    fetch(`/api/users/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        setUser(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [userId]); // Re-fetch when userId changes
+  
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>User not found</div>;
+  
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+}
 
----
+// 6. Multiple useEffects
+function Component() {
+  useEffect(() => {
+    console.log('Effect 1');
+  }, []);
+  
+  useEffect(() => {
+    console.log('Effect 2');
+  }, []);
+  
+  // Effects run in order they're defined
+}
 
-## 🧰 Tech Stack & Tools
+// 7. Document title update
+function PageTitle() {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    document.title = `Count: ${count}`;
+  }, [count]);
+  
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Clicked {count} times
+    </button>
+  );
+}
 
-### 💻 Languages
-![Java](https://img.shields.io/badge/-Java-007396?style=flat-square&logo=java&logoColor=white)
-![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript)
-![SQL](https://img.shields.io/badge/-SQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3)
-
-### 🚀 Frameworks & Libraries
-![Spring Boot](https://img.shields.io/badge/-Spring%20Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white)
-![React](https://img.shields.io/badge/-React-black?style=flat-square&logo=react)
-![Hibernate](https://img.shields.io/badge/-Hibernate-59666C?style=flat-square&logo=hibernate&logoColor=white)
-![JDBC](https://img.shields.io/badge/-JDBC-007396?style=flat-square&logo=java&logoColor=white)
-![JPA](https://img.shields.io/badge/-JPA-6DB33F?style=flat-square&logo=spring&logoColor=white)
-
-### 🗄️ Databases
-![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)
-
-### 🛠️ Tools & Technologies
-![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/-Git-black?style=flat-square&logo=git)
-![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)
-![VS Code](https://img.shields.io/badge/-VS%20Code-007ACC?style=flat-square&logo=visual-studio-code)
-![IntelliJ IDEA](https://img.shields.io/badge/-IntelliJ%20IDEA-000000?style=flat-square&logo=intellij-idea)
-![Postman](https://img.shields.io/badge/-Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)
-
-### 🎯 Core Skills
-- **Backend:** REST APIs, Microservices Architecture, Spring MVC, Spring Security
-- **Frontend:** Responsive Web Design, React Hooks, Component-Based Architecture
-- **System Design:** Low-Level Design (LLD), Design Patterns, SOLID Principles
-- **DSA:** Arrays, Linked Lists, Trees, Graphs, Dynamic Programming
-- **Deployment:** Netlify, Docker, CI/CD Pipelines
-
----
-
-## 🏆 GitHub Trophies
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=itzashu08&theme=gruvbox&margin-w=10&row=1&column=7" alt="GitHub Trophies" />
-</p>
-
----
-
-## 🚧 Featured Projects
-
-### 🚀 Major Full-Stack Projects
-
-| # | Project Name | Description | Tech Stack | Live Demo | GitHub Repository |
-|---|--------------|-------------|-----------|-----------|-------------------|
-| 1 | **Internship Management Platform** 🎓 | Complete internship enrollment system with payment integration (Cashfree), task management, certificate generation with QR verification, offer letter generation, and admin dashboard | Spring Boot, React.js, MySQL, JWT, Hibernate, Cashfree API, PDFBox | [Live](#) | [GitHub](#) |
-| 2 | **E-Commerce Website** 🛒 | Full-featured online shopping platform with product catalog, shopping cart, user authentication, order management, payment gateway integration, and admin panel | Spring Boot, React.js, MySQL, JWT, Spring Security, REST APIs | [Live](#) | [GitHub](#) |
-| 3 | **Job Portal** 💼 | Job search and recruitment platform with job listings, application tracking, resume uploads, employer dashboard, and candidate profiles | Spring Boot, React.js, MySQL, JPA, File Upload, Email Integration | [Live](#) | [GitHub](#) |
-
-### 🎯 Frontend Projects
-
-| # | Project Name | Description | Tech Stack | Live Demo | GitHub |
-|---|--------------|-------------|-----------|-----------|--------|
-| 1 | **University Website** 🎓 | Modern university website with courses, admissions, faculty profiles, events, and student portal | React.js, HTML5, CSS3, JavaScript, Responsive Design | [Live](#) | [GitHub](#) |
-| 2 | **Event Planner** 📅 | Event management application for planning, scheduling, and organizing events with calendar integration | React.js, JavaScript, Local Storage, Calendar API | [Live](#) | [GitHub](#) |
-
-### 🎮 Mini Projects & Applications
-
-| # | Project Name | Description | Tech Stack | Live Demo | GitHub |
-|---|--------------|-------------|-----------|-----------|--------|
-| 1 | **Tic-Tac-Toe Game** 🎮 | Interactive tic-tac-toe game with score tracking and two-player mode | HTML, CSS, JavaScript | [Live](#) | [GitHub](#) |
-| 2 | **To-Do App** ✅ | Task management app with add, edit, delete, and mark complete features | HTML, CSS, JavaScript, Local Storage | [Live](#) | [GitHub](#) |
-| 3 | **Weather App** 🌤️ | Real-time weather application with city search and 5-day forecast | HTML, CSS, JavaScript, OpenWeather API | [Live](#) | [GitHub](#) |
-| 4 | **Virtual Assistant** 🤖 | Voice-enabled virtual assistant with speech recognition and responses | JavaScript, Web Speech API, HTML, CSS | [Live](#) | [GitHub](#) |
-
----
-
-## 📌 Pinned Highlights
-
-* 🎓 **Internship Management Platform**: Complete full-stack system with Spring Boot backend, React frontend, payment integration, certificate generation, and admin panel
-* 🛒 **E-Commerce Website**: Full-featured online shopping platform with cart, payment gateway, order management, and product catalog
-* 💼 **Job Portal**: Recruitment platform connecting job seekers with employers, featuring resume uploads and application tracking
-* 🎓 **University Website**: Modern, responsive university website with course information and student portal
-* 🌤️ **Weather App**: Real-time weather information with city search and forecast using OpenWeather API
-* 🤖 **Virtual Assistant**: Voice-enabled assistant with speech recognition and intelligent responses
-* 📅 **Event Planner**: Complete event management system with scheduling and calendar integration
-* ✅ **150+ DSA Problems**: Strong foundation in Data Structures & Algorithms through consistent practice
-
----
-
-## 💼 Professional Experience
-
-### **Web Developer** | CypherBYTE
-📅 **May 2024 - June 2024** | Bhopal, Madhya Pradesh, India
-
-* Developed responsive web applications using modern frontend technologies
-* Collaborated with team to deliver client projects on time
-* Implemented best practices for code quality and performance
-
----
-
-## 🎓 Education
-
-**Bachelor of Technology (B.Tech) in Computer Science**  
-Bansal Institute of Science & Technology, Bhopal  
-📅 September 2021 - July 2025  
-🎯 Focus: Full Stack Development, Data Structures & Algorithms, System Design
-
-**Higher Secondary (10th & 12th)**  
-Government Higher Secondary School  
-📅 2018 - 2021
+// 8. Event listeners
+function WindowSize() {
+  const [width, setWidth] = useState(window.innerWidth);
+  
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  return <div>Window width: {width}px</div>;
+}
+```
 
 ---
 
-## 🎯 Current Focus & Goals
+### Q107. What is props drilling?
+**Hindi:** Props drilling ka matlab hai props ko multiple levels tak pass karna.
 
-### 🔥 Currently Working On:
-- 🚀 Building production-ready full-stack applications (E-commerce, Job Portal, Internship Platform)
-- 📚 Mastering System Design (Low-Level Design patterns)
-- 💪 Solving DSA problems daily (Currently: **150+ problems solved**, Target: **500+**)
-- 🌐 Enhancing frontend skills with React advanced patterns
-- 📝 Creating comprehensive project documentation and README files
+**Answer:**
+Props drilling is passing props through multiple component layers to reach a deeply nested component.
 
-### 🎓 Learning Path:
-- Advanced Spring Boot (Microservices, Spring Cloud)
-- React Advanced Patterns (Context API, Custom Hooks, Performance Optimization)
-- System Design & Architecture
-- Docker & Kubernetes for deployment
-- AWS Cloud Services
+**Problem:**
+```jsx
+// Grandparent
+function App() {
+  const user = { name: "John", role: "Admin" };
+  return <Parent user={user} />;
+}
 
-### 🤝 Looking For:
-- Full-time **Full Stack Developer** roles
-- Exciting **internship opportunities**
-- Freelance projects to build portfolio
-- Open-source collaboration
-- Mentorship and learning opportunities
+// Parent (doesn't use user, just passes it)
+function Parent({ user }) {
+  return <Child user={user} />;
+}
 
----
+// Child (doesn't use user, just passes it)
+function Child({ user }) {
+  return <GrandChild user={user} />;
+}
 
-## 📈 Contribution Graph
+// Finally uses it
+function GrandChild({ user }) {
+  return <div>Hello, {user.name}</div>;
+}
+```
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=itzashu08&theme=react-dark&hide_border=true&area=true" alt="Contribution Graph" />
-</p>
+**Solutions:**
 
----
+**1. Context API**
+```jsx
+import { createContext, useContext } from 'react';
 
-## 📊 Coding Stats
+const UserContext = createContext();
 
-<p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=itzashu08&theme=radical" alt="Profile Details" />
-</p>
+function App() {
+  const user = { name: "John", role: "Admin" };
+  
+  return (
+    <UserContext.Provider value={user}>
+      <Parent />
+    </UserContext.Provider>
+  );
+}
 
----
+function Parent() {
+  return <Child />; // No props!
+}
 
-## 🏅 Achievements & Certifications
+function Child() {
+  return <GrandChild />; // No props!
+}
 
-- ✅ Completed **Full Stack Web Development** course
-- ✅ Built **10+ production-ready projects** (3 major full-stack + 7 mini projects)
-- ✅ Solved **150+ DSA problems** on LeetCode & GeeksforGeeks
-- ✅ **Web Development Intern** at CypherBYTE (May-June 2024)
-- ✅ Proficient in **Java, Spring Boot, React.js, System Design**
-- ✅ Developed **3 major full-stack applications** with complete frontend and backend
-- ✅ Created **Virtual Assistant** with voice recognition capabilities
-- ✅ Built responsive websites deployed on **Netlify** and cloud platforms
+function GrandChild() {
+  const user = useContext(UserContext); // Direct access!
+  return <div>Hello, {user.name}</div>;
+}
+```
 
----
-
-## 📝 Latest Blog Posts
-
-<!-- BLOG-POST-LIST:START -->
-- Coming Soon: Technical blogs on Java, Spring Boot, and System Design
-<!-- BLOG-POST-LIST:END -->
-
----
-
-## 💬 Quote of the Day
-
-<p align="center">
-  <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical" alt="Random Dev Quote"/>
-</p>
-
----
-
-## 🎵 Fun Facts About Me
-
-- 🎯 I love solving coding challenges and learning new technologies
-- 🚀 Always excited about building something that makes a difference
-- 📚 Constantly reading tech blogs and documentation
-- 💡 Believe in writing clean, maintainable, and scalable code
-- 🌱 Growth mindset: Always learning, always improving
-- ☕ Powered by coffee and passion for coding
+**2. Component Composition**
+```jsx
+function App() {
+  const user = { name: "John", role: "Admin" };
+  
+  return (
+    <Parent>
+      <Child>
+        <GrandChild user={user} />
+      </Child>
+    </Parent>
+  );
+}
+```
 
 ---
 
-## 🤝 Let's Collaborate!
+### Q108. What is Context API?
+**Hindi:** Context API global state manage karne ka tarika hai bina props drilling ke.
 
-I'm always interested in:
-- 🚀 Full-stack development projects
-- 💼 Freelance opportunities
-- 🤝 Open-source contributions
-- 📝 Technical writing and blogging
-- 🎓 Learning from experienced developers
+**Answer:**
+Context provides a way to pass data through component tree without passing props manually at every level.
 
-**Feel free to reach out if you want to:**
-- Collaborate on a project
-- Discuss tech and ideas
-- Ask for help or mentorship
-- Just connect and network!
+**Example:**
+```jsx
+import { createContext, useContext, useState } from 'react';
+
+// 1. Create Context
+const ThemeContext = createContext();
+
+// 2. Create Provider Component
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+  
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// 3. Create Custom Hook (optional but recommended)
+function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within ThemeProvider');
+  }
+  return context;
+}
+
+// 4. Use in Components
+function App() {
+  return (
+    <ThemeProvider>
+      <Header />
+      <Main />
+      <Footer />
+    </ThemeProvider>
+  );
+}
+
+function Header() {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <header className={theme}>
+      <h1>My App</h1>
+      <button onClick={toggleTheme}>
+        Switch to {theme === 'light' ? 'dark' : 'light'} mode
+      </button>
+    </header>
+  );
+}
+
+function Main() {
+  const { theme } = useTheme();
+  return <main className={theme}>Content...</main>;
+}
+
+// Real-world example: Auth Context
+const AuthContext = createContext();
+
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetchUser(token).then(setUser);
+    }
+    setLoading(false);
+  }, []);
+  
+  const login = async (email, password) => {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
+    const data = await response.json();
+    setUser(data.user);
+    localStorage.setItem('token', data.token);
+  };
+  
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('token');
+  };
+  
+  return (
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+function useAuth() {
+  return useContext(AuthContext);
+}
+
+// Usage
+function Dashboard() {
+  const { user, logout } = useAuth();
+  
+  return (
+    <div>
+      <h1>Welcome, {user.name}!</h1>
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+}
+```
 
 ---
 
-## 📫 Get In Touch
+### Q109. What are React Hooks?
+**Hindi:** Hooks functional components mein state aur lifecycle features use karne dete hain.
 
-<p align="center">
-  <a href="mailto:rajpootashishd@gmail.com">
-    <img src="https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=Gmail&logoColor=white"/>
-  </a>
-  <a href="https://www.linkedin.com/in/itzashu08">
-    <img src="https://img.shields.io/badge/-LinkedIn-0077B5?style=for-the-badge&logo=Linkedin&logoColor=white"/>
-  </a>
-  <a href="https://github.com/itzashu08">
-    <img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
-  </a>
-  <a href="tel:+919691207533">
-    <img src="https://img.shields.io/badge/-Phone-25D366?style=for-the-badge&logo=WhatsApp&logoColor=white"/>
-  </a>
-</p>
+**Answer:**
+Hooks are functions that let you use state and other React features in functional components.
+
+**Built-in Hooks:**
+
+**1. useState** - Add state
+**2. useEffect** - Side effects
+**3. useContext** - Access context
+**4. useReducer** - Complex state logic
+**5. useCallback** - Memoize functions
+**6. useMemo** - Memoize values
+**7. useRef** - Reference values/DOM
+**8. useLayoutEffect** - Sync layout effects
+**9. useImperativeHandle** - Customize ref
+**10. useDebugValue** - Debug custom hooks
+
+**Example:**
+```jsx
+import {
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  useRef
+} from 'react';
+
+function ExampleComponent() {
+  // useState
+  const [count, setCount] = useState(0);
+  
+  // useEffect
+  useEffect(() => {
+    document.title = `Count: ${count}`;
+  }, [count]);
+  
+  // useContext
+  const theme = useContext(ThemeContext);
+  
+  // useRef
+  const inputRef = useRef(null);
+  const focusInput = () => inputRef.current.focus();
+  
+  // useCallback
+  const handleClick = useCallback(() => {
+    setCount(c => c + 1);
+  }, []);
+  
+  // useMemo
+  const expensiveValue = useMemo(() => {
+    return computeExpensiveValue(count);
+  }, [count]);
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+      <input ref={inputRef} />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+**Rules of Hooks:**
+1. Only call hooks at the top level (not in loops/conditions)
+2. Only call hooks from React functions
+3. Custom hooks start with "use"
 
 ---
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer"/>
-</p>
+### Q110. What is useRef?
+**Hindi:** useRef DOM elements ko access karne ya values ko persist karne ke liye use hota hai.
 
-<h3 align="center">
-  💖 <i>Made with passion, dedication & Java!</i> 💖
-</h3>
+**Answer:**
+`useRef` creates a mutable reference that persists across renders without causing re-renders.
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22C55E&center=true&vCenter=true&width=435&lines=Aspiring+Java+Full+Stack+Developer;Always+Learning+New+Things;Building+Scalable+Applications;Open+to+New+Opportunities!" alt="Typing SVG" />
-</p>
+**Use Cases:**
+1. Accessing DOM elements
+2. Storing mutable values
+3. Keeping previous values
+4. Avoiding re-renders
+
+**Example:**
+```jsx
+import { useRef, useState, useEffect } from 'react';
+
+// 1. Access DOM elements
+function FocusInput() {
+  const inputRef = useRef(null);
+  
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+  
+  return (
+    <div>
+      <input ref={inputRef} />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+
+// 2. Store mutable value (doesn't cause re-render)
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  const intervalRef = useRef(null);
+  
+  const start = () => {
+    intervalRef.current = setInterval(() => {
+      setSeconds(s => s + 1);
+    }, 1000);
+  };
+  
+  const stop = () => {
+    clearInterval(intervalRef.current);
+  };
+  
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current);
+  }, []);
+  
+  return (
+    <div>
+      <p>Seconds: {seconds}</p>
+      <button onClick={start}>Start</button>
+      <button onClick={stop}>Stop</button>
+    </div>
+  );
+}
+
+// 3. Keep previous value
+function usePrevious(value) {
+  const ref = useRef();
+  
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  
+  return ref.current;
+}
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const prevCount = usePrevious(count);
+  
+  return (
+    <div>
+      <p>Current: {count}</p>
+      <p>Previous: {prevCount}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+}
+
+// 4. Scroll to element
+function ScrollToTop() {
+  const topRef = useRef(null);
+  
+  const scrollToTop = () => {
+    topRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  
+  return (
+    <div>
+      <div ref={topRef}>Top of page</div>
+      {/* Long content */}
+      <button onClick={scrollToTop}>Scroll to Top</button>
+    </div>
+  );
+}
+
+// 5. Measure element
+function MeasureElement() {
+  const divRef = useRef(null);
+  const [dimensions, setDimensions] = useState({});
+  
+  useEffect(() => {
+    if (divRef.current) {
+      const { width, height } = divRef.current.getBoundingClientRect();
+      setDimensions({ width, height });
+    }
+  }, []);
+  
+  return (
+    <div ref={divRef}>
+      Size: {dimensions.width} x {dimensions.height}
+    </div>
+  );
+}
+```
 
 ---
 
-<p align="center">
-  <i>⭐️ From <a href="https://github.com/itzashu08">Ashish Rathour</a> - Let's build something amazing together!</i>
-</p>
+### Q111-130: Quick Fire Basic React
+
+**Q111. What is Virtual DOM?**
+Virtual DOM is a lightweight copy of the actual DOM. React updates Virtual DOM first, then efficiently updates real DOM.
+
+**Q112. What is reconciliation?**
+Process of updating the DOM by comparing Virtual DOM with previous version and applying minimal changes.
+
+**Q113. What are keys in React?**
+```jsx
+// Keys help React identify which items changed
+const items = ['Apple', 'Banana', 'Orange'];
+
+// Good
+{items.map((item, index) => (
+  <li key={item}>{item}</li>
+))}
+
+// Bad (avoid index as key if list can change)
+{items.map((item, index) => (
+  <li key={index}>{item}</li>
+))}
+```
+
+**Q114. What is React.Fragment?**
+```jsx
+// Avoids extra div wrapper
+return (
+  <React.Fragment>
+    <h1>Title</h1>
+    <p>Content</p>
+  </React.Fragment>
+);
+
+// Short syntax
+return (
+  <>
+    <h1>Title</h1>
+    <p>Content</p>
+  </>
+);
+```
+
+**Q115. What are controlled components?**
+```jsx
+// Controlled - React controls input value
+function Form() {
+  const [name, setName] = useState('');
+  
+  return (
+    <input 
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+```
+
+**Q116. What are uncontrolled components?**
+```jsx
+// Uncontrolled - DOM controls input value
+function Form() {
+  const inputRef = useRef();
+  
+  const handleSubmit = () => {
+    console.log(inputRef.current.value);
+  };
+  
+  return <input ref={inputRef} />;
+}
+```
+
+**Q117. What is conditional rendering?**
+```jsx
+function Greeting({ isLoggedIn }) {
+  // If-else
+  if (isLoggedIn) {
+    return <h1>Welcome back!</h1>;
+  }
+  return <h1>Please sign in</h1>;
+  
+  // Ternary
+  return isLoggedIn ? <h1>Welcome!</h1> : <h1>Sign in</h1>;
+  
+  // && operator
+  return isLoggedIn && <h1>Welcome!</h1>;
+}
+```
+
+**Q118. What is list rendering?**
+```jsx
+function TodoList({ todos }) {
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Q119. How to handle events?**
+```jsx
+function Button() {
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log('Clicked!');
+  };
+  
+  return <button onClick={handleClick}>Click me</button>;
+}
+```
+
+**Q120. What is lifting state up?**
+Moving state to common parent component to share between children.
+
+```jsx
+function Parent() {
+  const [value, setValue] = useState('');
+  
+  return (
+    <div>
+      <Child1 value={value} onChange={setValue} />
+      <Child2 value={value} />
+    </div>
+  );
+}
+```
+
+---
+
+## Intermediate React (Questions 131-160)
+
+### Q131. What is useReducer?
+**Hindi:** useReducer complex state logic handle karne ke liye use hota hai.
+
+**Answer:**
+`useReducer` is an alternative to `useState` for managing complex state logic.
+
+**When to use:**
+- Multiple sub-values in state
+- Complex state transitions
+- Next state depends on previous
+- Redux-like pattern
+
+**Example:**
+```jsx
+import { useReducer } from 'react';
+
+// 1. Define reducer
+function counterReducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    case 'RESET':
+      return { count: 0 };
+    default:
+      throw new Error('Unknown action');
+  }
+}
+
+// 2. Use in component
+function Counter() {
+  const [state, dispatch] = useReducer(counterReducer, { count: 0 });
+  
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+      <button onClick={() => dispatch({ type: 'RESET' })}>Reset</button>
+    </div>
+  );
+}
+
+// Real-world example: Todo List
+const initialState = {
+  todos: [],
+  filter: 'all'
+};
+
+function todoReducer(state, action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todos: [...state.todos, {
+          id: Date.now(),
+          text: action.payload,
+          completed: false
+        }]
+      };
+      
+    case 'TOGGLE_TODO':
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.payload
+            ? { ...todo, completed: !todo.completed }
+            : todo
+        )
+      };
+      
+    case 'DELETE_TODO':
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.payload)
+      };
+      
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.payload
+      };
+      
+    default:
+      return state;
+  }
+}
+
+function TodoApp() {
+  const [state, dispatch] = useReducer(todoReducer, initialState);
+  const [input, setInput] = useState('');
+  
+  const addTodo = () => {
+    if (input.trim()) {
+      dispatch({ type: 'ADD_TODO', payload: input });
+      setInput('');
+    }
+  };
+  
+  const filteredTodos = state.todos.filter(todo => {
+    if (state.filter === 'completed') return todo.completed;
+    if (state.filter === 'active') return !todo.completed;
+    return true;
+  });
+  
+  return (
+    <div>
+      <input 
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <button onClick={addTodo}>Add</button>
+      
+      <div>
+        <button onClick={() => dispatch({ type: 'SET_FILTER', payload: 'all' })}>
+          All
+        </button>
+        <button onClick={() => dispatch({ type: 'SET_FILTER', payload: 'active' })}>
+          Active
+        </button>
+        <button onClick={() => dispatch({ type: 'SET_FILTER', payload: 'completed' })}>
+          Completed
+        </button>
+      </div>
+      
+      <ul>
+        {filteredTodos.map(todo => (
+          <li key={todo.id}>
+            <input 
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}
+            />
+            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+              {todo.text}
+            </span>
+            <button onClick={() => dispatch({ type: 'DELETE_TODO', payload: todo.id })}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+---
+
+### Q132. What is useCallback?
+**Hindi:** useCallback functions ko memoize karta hai re-renders avoid karne ke liye.
+
+**Answer:**
+`useCallback` returns a memoized version of callback that only changes if dependencies change.
+
+**When to use:**
+- Passing callbacks to optimized child components
+- Dependency of useEffect
+- Expensive function creation
+
+**Example:**
+```jsx
+import { useState, useCallback, memo } from 'react';
+
+// Without useCallback - Child re-renders unnecessarily
+function Parent() {
+  const [count, setCount] = useState(0);
+  const [other, setOther] = useState(0);
+  
+  // New function created on every render
+  const handleClick = () => {
+    console.log('Clicked');
+  };
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment Count</button>
+      <button onClick={() => setOther(other + 1)}>Increment Other</button>
+      
+      {/* Child re-renders even when count changes (not needed) */}
+      <Child onClick={handleClick} />
+    </div>
+  );
+}
+
+// With useCallback - Child only re-renders when needed
+function Parent() {
+  const [count, setCount] = useState(0);
+  const [other, setOther] = useState(0);
+  
+  // Same function reference unless dependencies change
+  const handleClick = useCallback(() => {
+    console.log('Clicked', count);
+  }, [count]); // Re-create only when count changes
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment Count</button>
+      <button onClick={() => setOther(other + 1)}>Increment Other</button>
+      
+      {/* Child doesn't re-render when 'other' changes */}
+      <Child onClick={handleClick} />
+    </div>
+  );
+}
+
+// Memoized child component
+const Child = memo(({ onClick }) => {
+  console.log('Child rendered');
+  return <button onClick={onClick}>Click me</button>;
+});
+
+// Real-world example: Search with debounce
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  
+  // Memoize search function
+  const search = useCallback(async (searchTerm) => {
+    if (!searchTerm) {
+      setResults([]);
+      return;
+    }
+    
+    const response = await fetch(`/api/search?q=${searchTerm}`);
+    const data = await response.json();
+    setResults(data);
+  }, []);
+  
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      search(query);
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [query, search]);
+  
+  return (
+    <div>
+      <input 
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <ul>
+        {results.map(result => (
+          <li key={result.id}>{result.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+---
+
+### Q133. What is useMemo?
+**Hindi:** useMemo expensive calculations ko memoize karta hai.
+
+**Answer:**
+`useMemo` returns a memoized value that only recomputes when dependencies change.
+
+**Example:**
+```jsx
+import { useState, useMemo } from 'react';
+
+function ExpensiveComponent() {
+  const [count, setCount] = useState(0);
+  const [other, setOther] = useState(0);
+  
+  // Without useMemo - Recalculates on every render (slow!)
+  const expensiveValue = calculateExpensiveValue(count);
+  
+  // With useMemo - Only recalculates when count changes
+  const expensiveValue = useMemo(() => {
+    console.log('Calculating...');
+    return calculateExpensiveValue(count);
+  }, [count]);
+  
+  return (
+    <div>
+      <p>Expensive Value: {expensiveValue}</p>
+      <p>Count: {count}</p>
+      <p>Other: {other}</p>
+      <button onClick={() => setCount(count + 1)}>Increment Count</button>
+      <button onClick={() => setOther(other + 1)}>Increment Other</button>
+      {/* When 'other' changes, expensive calculation doesn't run! */}
+    </div>
+  );
+}
+
+function calculateExpensiveValue(num) {
+  // Simulate expensive calculation
+  let result = 0;
+  for (let i = 0; i < 1000000000; i++) {
+    result += i;
+  }
+  return result + num;
+}
+
+// Real example: Filtered list
+function UserList() {
+  const [users, setUsers] = useState([/* large array */]);
+  const [filter, setFilter] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  
+  // Memoize filtered and sorted list
+  const filteredUsers = useMemo(() => {
+    console.log('Filtering and sorting...');
+    
+    return users
+      .filter(user => 
+        user.name.toLowerCase().includes(filter.toLowerCase())
+      )
+      .sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+  }, [users, filter, sortBy]);
+  
+  return (
+    <div>
+      <input 
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Filter users..."
+      />
+      <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <option value="name">Name</option>
+        <option value="email">Email</option>
+      </select>
+      
+      <ul>
+        {filteredUsers.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+---
+
+### Q134. What is React.memo?
+**Hindi:** React.memo component ko memoize karta hai unnecessary re-renders avoid karne ke liye.
+
+**Answer:**
+`React.memo` is a Higher Order Component that memoizes component output.
+
+**Example:**
+```jsx
+import { memo } from 'react';
+
+// Without memo - Re-renders even if props don't change
+function Child({ name }) {
+  console.log('Child rendered');
+  return <div>Hello, {name}!</div>;
+}
+
+// With memo - Only re-renders if props change
+const Child = memo(function Child({ name }) {
+  console.log('Child rendered');
+  return <div>Hello, {name}!</div>;
+});
+
+function Parent() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+      {/* Child doesn't re-render when count changes */}
+      <Child name="John" />
+    </div>
+  );
+}
+
+// Custom comparison function
+const Child = memo(
+  function Child({ user }) {
+    return <div>{user.name}</div>;
+  },
+  (prevProps, nextProps) => {
+    // Return true if props are equal (skip re-render)
+    return prevProps.user.id === nextProps.user.id;
+  }
+);
+```
+
+---
+
+### Q135-160: Quick Fire Intermediate React
+
+**Q135. What is lazy loading?**
+```jsx
+import { lazy, Suspense } from 'react';
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  );
+}
+```
+
+**Q136. What is code splitting?**
+Breaking bundle into smaller chunks that load on demand.
+
+**Q137. What are Error Boundaries?**
+```jsx
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  
+  componentDidCatch(error, errorInfo) {
+    console.log(error, errorInfo);
+  }
+  
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong!</h1>;
+    }
+    return this.props.children;
+  }
+}
+```
+
+**Q138. What is React Router?**
+Library for routing in React applications.
+```jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/users/:id" element={<User />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+**Q139. What are custom hooks?**
+```jsx
+// Custom hook for form handling
+function useForm(initialValues) {
+  const [values, setValues] = useState(initialValues);
+  
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    });
+  };
+  
+  const reset = () => setValues(initialValues);
+  
+  return [values, handleChange, reset];
+}
+
+// Usage
+function Form() {
+  const [values, handleChange, reset] = useForm({
+    name: '',
+    email: ''
+  });
+  
+  return (
+    <form>
+      <input name="name" value={values.name} onChange={handleChange} />
+      <input name="email" value={values.email} onChange={handleChange} />
+      <button type="button" onClick={reset}>Reset</button>
+    </form>
+  );
+}
+```
+
+**Q140. What is useLayoutEffect?**
+Fires synchronously after DOM mutations, before browser paint.
+
+**Q141-160:** Performance optimization, Redux, state management, testing, etc.
+
+---
+
+## 💻 Coding Challenges
+
+### Challenge 1: Counter with useReducer
+```jsx
+// Create a counter with increment, decrement, and reset using useReducer
+```
+
+### Challenge 2: Todo List
+```jsx
+// Build a complete todo list with add, delete, toggle, filter
+```
+
+### Challenge 3: Custom Hook - useFetch
+```jsx
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, [url]);
+  
+  return { data, loading, error };
+}
+```
+
+### Challenge 4: Debounce Search
+```jsx
+// Implement search with debouncing
+```
+
+### Challenge 5: Infinite Scroll
+```jsx
+// Implement infinite scroll with pagination
+```
+
+---
+
+## 🎯 Interview Tips
+
+1. **Understand Fundamentals** - Don't just memorize
+2. **Practice Coding** - Build real projects
+3. **Explain Your Thinking** - Talk through solutions
+4. **Ask Questions** - Clarify requirements
+5. **Test Your Code** - Think about edge cases
+
+---
+
+**Full guide continues with Advanced React (Q161-200) and more challenges in next file if needed!**
